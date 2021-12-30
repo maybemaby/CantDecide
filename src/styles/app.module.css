@@ -1,0 +1,62 @@
+* {
+  font-family: inherit;
+  font-size: 100%;
+}
+
+.App {
+  color: var(--indigo-500);
+}
+
+.Header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.Title {
+  justify-self: flex-start;
+  padding: 0.75rem;
+  font-size: 1.875rem /* 30px */;
+  line-height: 2.25rem /* 36px */;
+  font-weight: 700;
+}
+
+.DarkModeIcon {
+  flex: none;
+  padding: 0.75rem;
+  margin: 0.5rem;
+  height: 100%;
+  align-self: center;
+  justify-content: center;
+  width: auto;
+  border-radius: 9999px;
+}
+
+.DarkModeIcon:hover {
+  background-color: var(--gray-300);
+}
+
+.Config {
+  display: flex;
+  flex-direction: column;
+  margin: 00.75rem;
+}
+
+.WideButton {
+  background-color: var(--indigo-500);
+  color: whitesmoke;
+  padding: 0.75rem 0.5rem;
+  border-radius: 1rem;
+  border-style: inherit;
+}
+
+.WideButton:hover {
+  background-color: var(--indigo-600);
+}
+
+@media screen and (min-width: 768px) {
+  .App {
+    margin: 0 0.75rem;
+  }
+}

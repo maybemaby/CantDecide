@@ -1,23 +1,26 @@
-import React from 'react';
-import logo from './logo.svg';
+import React from "react";
+import logo from "./logo.svg";
+import { ReactComponent as MoonIcon } from "./icons/moon.svg";
+import "./styles/base.css";
+import styles from "./styles/app.module.css";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+    <div className={`${styles.App}`}>
+      <header className={`${styles.Header}`}>
+        <h1 className={`${styles.Title}`}>cantdecide.io</h1>
+        <MoonIcon
+          className={`${styles.DarkModeIcon} transition duration-300`}
+        />
       </header>
+      <section id="configuration" className={styles.Config}>
+        <button
+          type="button"
+          className={`${styles.WideButton} transition duration-500`}
+        >
+          Edit Factors
+        </button>
+      </section>
     </div>
   );
 }
