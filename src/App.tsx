@@ -1,10 +1,13 @@
-import React from "react";
-import logo from "./logo.svg";
-import { ReactComponent as MoonIcon } from "./icons/moon.svg";
+import React, { useState } from "react";
 import "./styles/base.css";
 import styles from "./styles/app.module.css";
+import { ReactComponent as MoonIcon } from "./icons/moon.svg";
+import { IFactor } from "./models/IFactor";
+import { ChoiceList } from "./components/ChoiceList";
 
 function App() {
+  const [factors, setFactors] = useState<IFactor[]>([]);
+
   return (
     <div className={`${styles.App}`}>
       <header className={`${styles.Header}`}>
@@ -21,6 +24,7 @@ function App() {
           Edit Factors
         </button>
       </section>
+      <ChoiceList factors={factors} />
     </div>
   );
 }
