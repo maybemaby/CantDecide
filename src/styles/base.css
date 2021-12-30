@@ -141,6 +141,10 @@ button {
   border-style: none;
 }
 
+input[type="text"] {
+  border-style: none;
+}
+
 .transition {
   transition-property: all;
   transition-duration: 150ms;
