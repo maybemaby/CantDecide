@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { useChoices } from "../hooks/useChoices";
 import { IFactor } from "../models/IFactor";
 import { ChoiceCard } from "./ChoiceCard";
+import { IChoice } from "../models/IChoice";
 
 interface ChoiceListProps {
   factors: IFactor[];
@@ -14,6 +15,13 @@ export const ChoiceList = ({ factors }: ChoiceListProps): JSX.Element => {
 
   const handleChange = (event: React.FormEvent<HTMLInputElement>): void => {
     setChoiceInput(event.currentTarget.value);
+  };
+
+  // returns true if valid, false if invalid
+  const validateChoice = (title: string): boolean => {
+    const choiceTitles = choices.map((choice: IChoice): string => choice.title);
+    if (choiceTitles.includes(title)) return false;
+    return true;
   };
 
   const handleChoiceSubmit = (
@@ -31,7 +39,9 @@ export const ChoiceList = ({ factors }: ChoiceListProps): JSX.Element => {
         title: choiceInput.trim(),
         id: id,
       };
-      addChoice(newChoice);
+      if (validateChoice(newChoice.title)) {
+        addChoice(newChoice);
+      }
       setChoiceInput("");
     }
   };
@@ -43,8 +53,14 @@ export const ChoiceList = ({ factors }: ChoiceListProps): JSX.Element => {
       </span>
       <section id="choice-list" className={styles.Body}>
         <ul>
-          {choices.map((choice) => {
-            return <ChoiceCard choice={choice} toggleChoose={toggleChoose} />;
+          {choices.map((choice, index) => {
+            return (
+              <ChoiceCard
+                key={index}
+                choice={choice}
+                toggleChoose={toggleChoose}
+              />
+            );
           })}
         </ul>
         <input
