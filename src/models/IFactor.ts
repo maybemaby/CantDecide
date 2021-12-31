@@ -5,7 +5,10 @@ interface Weight {
 
 export interface IFactor {
   title: string;
-  score: number;
-  trueScore: number;
   weight: Weight;
+}
+
+export interface IScoredFactor extends IFactor {
+  score?: number;
+  trueScore?: number;
 }
