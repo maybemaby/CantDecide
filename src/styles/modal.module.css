@@ -1,0 +1,46 @@
+* {
+  font-family: inherit;
+  font-size: inherit;
+}
+
+.OuterContainer {
+  display: flex;
+  vertical-align: middle;
+  justify-content: center;
+  position: fixed;
+  z-index: 10;
+  top: 0px;
+  left: 0px;
+  right: 0px;
+  bottom: 0px;
+}
+
+.Container {
+  width: 91.66667%;
+  min-height: 80%;
+  background-color: var(--gray-200);
+  z-index: 11;
+  padding: 1.5rem;
+  margin-top: 1rem;
+  position: fixed;
+  border-radius: 1.5rem;
+  box-shadow: rgba(0, 0, 0, 0.25) 0px 14px 28px,
+    rgba(0, 0, 0, 0.22) 0px 10px 10px;
+}
+
+.ExitButton {
+  position: absolute;
+  top: 1.25rem;
+  right: 1.25rem;
+}
+
+.ExitButton:hover {
+  cursor: pointer;
+  background-color: transparent;
+}
+
+@media screen and (min-width: 768px) {
+  .Container {
+    width: 75%;
+  }
+}

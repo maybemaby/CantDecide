@@ -1,0 +1,16 @@
+* {
+  font-family: inherit;
+  font-size: inherit;
+}
+
+.HeaderSection {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.Header {
+  font-weight: 700;
+  font-size: 1.875rem /* 30px */;
+  line-height: 2.25rem /* 36px */;
+}

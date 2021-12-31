@@ -5,6 +5,7 @@
 
 .App {
   color: var(--indigo-500);
+  position: relative;
 }
 
 .Header {
