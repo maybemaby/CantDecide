@@ -4,9 +4,10 @@ import styles from "./styles/app.module.css";
 import { ReactComponent as MoonIcon } from "./icons/moon.svg";
 import { IFactor } from "./models/IFactor";
 import { ChoiceList } from "./components/ChoiceList";
+import { useFactors } from "./hooks/useFactors";
 
 function App() {
-  const [factors, setFactors] = useState<IFactor[]>([]);
+  const [factors, addFactor, removeFactor] = useFactors();
 
   return (
     <div className={`${styles.App}`}>

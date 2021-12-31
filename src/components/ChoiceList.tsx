@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { idText } from "typescript";
 import { useChoices } from "../hooks/useChoices";
 import { IChoice } from "../models/IChoice";
 import { IFactor } from "../models/IFactor";
@@ -28,11 +27,9 @@ export const ChoiceList = ({ factors }: ChoiceListProps): JSX.Element => {
           },
           { id: 0 }
         ).id + 1;
-      const newChoice: IChoice = {
+      const newChoice = {
         title: choiceInput.trim(),
         id: id,
-        chosen: false,
-        factors: [],
       };
       addChoice(newChoice);
       setChoiceInput("");
