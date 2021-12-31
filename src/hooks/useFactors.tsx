@@ -6,9 +6,6 @@ type EditFactorsFunc = (factor: IFactor) => void;
 export const useFactors = (): [IFactor[], EditFactorsFunc, EditFactorsFunc] => {
   const [factors, setFactors] = useState<IFactor[]>([]);
 
-  useEffect(() => {
-    calcWeights();
-  }, [factors]);
 
   const calcWeights = (): void => {
     const totalWeight = factors.reduce((prev: number, current): number => {
@@ -29,6 +26,7 @@ export const useFactors = (): [IFactor[], EditFactorsFunc, EditFactorsFunc] => {
 
   const addFactor = (factor: IFactor): void => {
     setFactors([...factors, factor]);
+    calcWeights();
   };
 
   const removeFactor = (factor: IFactor): void => {
@@ -36,6 +34,7 @@ export const useFactors = (): [IFactor[], EditFactorsFunc, EditFactorsFunc] => {
       return !(insideFactor.title === factor.title);
     });
     setFactors(newFactors);
+    calcWeights();
   };
 
   return [factors, addFactor, removeFactor];

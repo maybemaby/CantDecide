@@ -1,15 +1,15 @@
+import styles from "../styles/choicelist.module.css";
 import React, { useState } from "react";
 import { useChoices } from "../hooks/useChoices";
-import { IChoice } from "../models/IChoice";
 import { IFactor } from "../models/IFactor";
-import styles from "../styles/choicelist.module.css";
+import { ChoiceCard } from "./ChoiceCard";
 
 interface ChoiceListProps {
   factors: IFactor[];
 }
 
 export const ChoiceList = ({ factors }: ChoiceListProps): JSX.Element => {
-  const [choices, addChoice] = useChoices(factors);
+  const [choices, addChoice, toggleChoose] = useChoices(factors);
   const [choiceInput, setChoiceInput] = useState<string>("");
 
   const handleChange = (event: React.FormEvent<HTMLInputElement>): void => {
@@ -43,8 +43,8 @@ export const ChoiceList = ({ factors }: ChoiceListProps): JSX.Element => {
       </span>
       <section id="choice-list" className={styles.Body}>
         <ul>
-          {choices.map((choice, index) => {
-            return <li key={index}>{choice.title}</li>;
+          {choices.map((choice) => {
+            return <ChoiceCard choice={choice} toggleChoose={toggleChoose} />;
           })}
         </ul>
         <input
