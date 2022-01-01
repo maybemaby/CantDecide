@@ -1,6 +1,7 @@
 import { useForm, SubmitHandler } from "react-hook-form";
 import { IFactor } from "../models/IFactor";
 import { EditFactorsFunc } from "../hooks/useFactors";
+import { FactorTable } from "./FactorTable";
 import styles from "../styles/factorsmodal.module.css";
 import React from "react";
 
@@ -105,6 +106,7 @@ export const FactorSection = ({
           Clear all factors
         </button>
       </form>
+      <FactorTable factors={factors} removeFactor={removeFactor} />
     </>
   );
 };
