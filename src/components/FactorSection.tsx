@@ -8,6 +8,7 @@ export interface FactorSectionProps {
   factors: IFactor[];
   addFactor: EditFactorsFunc;
   removeFactor: EditFactorsFunc;
+  removeAllFactors: (toRemove?: IFactor[]) => void;
 }
 
 interface FactorFormData {
@@ -19,6 +20,7 @@ export const FactorSection = ({
   factors,
   addFactor,
   removeFactor,
+  removeAllFactors,
 }: FactorSectionProps): JSX.Element => {
   const {
     register,
@@ -39,6 +41,10 @@ export const FactorSection = ({
     if (e) {
       e.target.reset();
     }
+  };
+
+  const onClear = () => {
+    removeAllFactors();
   };
 
   return (
@@ -91,7 +97,11 @@ export const FactorSection = ({
         >
           Add Factor
         </button>
-        <button type="reset" className={`${styles.RoundButton} ${styles.Red}`}>
+        <button
+          type="reset"
+          className={`${styles.RoundButton} ${styles.Red}`}
+          onClick={onClear}
+        >
           Clear all factors
         </button>
       </form>

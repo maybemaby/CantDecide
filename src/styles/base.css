@@ -1,9 +1,12 @@
 :root {
   --indigo-500: #6366f1;
   --indigo-600: #4f46e5;
+  --indigo-800: rgba(55, 48, 163, 1);
   --gray-300: #d1d5db;
   --gray-200: #e5e7eb;
   --green-300: #86efac;
+  --red-400: rgba(248, 113, 113, 1);
+  --red-500: rgba(239, 68, 68, 1);
 }
 
 /* Font */
@@ -135,7 +138,7 @@ body {
     BlinkMacSystemFont, Segoe UI, Roboto, Helvetica Neue, Arial, Noto Sans,
     sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol,
     Noto Color Emoji;
-  font-size: 14px;
+  font-size: 16px;
 }
 
 main#root {
@@ -147,6 +150,10 @@ button {
 }
 
 input[type="text"] {
+  border-style: none;
+}
+
+input[type="number"] {
   border-style: none;
 }
 

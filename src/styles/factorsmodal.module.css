@@ -49,6 +49,7 @@
   transition-property: background-color;
   transition-duration: 400ms;
   transition-timing-function: ease-in-out;
+  cursor: pointer;
 }
 
 .DarkIndigo {

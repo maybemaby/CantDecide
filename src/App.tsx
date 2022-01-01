@@ -8,7 +8,7 @@ import { FactorSection, FactorSectionProps } from "./components/FactorSection";
 import { useFactors } from "./hooks/useFactors";
 
 function App() {
-  const [factors, addFactor, removeFactor] = useFactors();
+  const { factors, addFactor, removeFactor, removeAllFactors } = useFactors();
   const [showModal, setShowModal] = useState(false);
 
   const handleModalToggle = (): void => {
@@ -27,7 +27,12 @@ function App() {
         modalState={showModal}
         handleModalState={handleModalToggle}
         BaseComponent={FactorSection}
-        baseComponentProps={{ factors, addFactor, removeFactor }}
+        baseComponentProps={{
+          factors,
+          addFactor,
+          removeFactor,
+          removeAllFactors,
+        }}
       />
       <section id="configuration" className={styles.Config}>
         <button

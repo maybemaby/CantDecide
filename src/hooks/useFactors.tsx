@@ -3,7 +3,14 @@ import { IFactor } from "../models/IFactor";
 
 export type EditFactorsFunc = (factor: IFactor) => void;
 
-export const useFactors = (): [IFactor[], EditFactorsFunc, EditFactorsFunc] => {
+export interface UseFactorsReturn {
+  factors: IFactor[];
+  addFactor: EditFactorsFunc;
+  removeFactor: EditFactorsFunc;
+  removeAllFactors: (toRemove?: IFactor[]) => void;
+}
+
+export const useFactors = (): UseFactorsReturn => {
   const [factors, setFactors] = useState<IFactor[]>([]);
 
   const calcWeights = (factorList: IFactor[]): IFactor[] => {
@@ -38,5 +45,20 @@ export const useFactors = (): [IFactor[], EditFactorsFunc, EditFactorsFunc] => {
     setFactors(weightedFactors);
   };
 
-  return [factors, addFactor, removeFactor];
+  const removeAllFactors = (toRemove?: IFactor[]): void => {
+    if (toRemove) {
+      const removeTitles = toRemove.map(
+        (factor: IFactor): string => factor.title
+      );
+      const newFactors = factors.filter((insideFactor: IFactor): boolean => {
+        return !removeTitles.includes(insideFactor.title);
+      });
+      const weightedFactors = calcWeights(newFactors);
+      setFactors(weightedFactors);
+    } else {
+      setFactors([]);
+    }
+  };
+
+  return { factors, addFactor, removeFactor, removeAllFactors };
 };
