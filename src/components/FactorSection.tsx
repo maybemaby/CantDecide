@@ -1,7 +1,8 @@
-import { useForm } from "react-hook-form";
+import { useForm, SubmitHandler } from "react-hook-form";
 import { IFactor } from "../models/IFactor";
 import { EditFactorsFunc } from "../hooks/useFactors";
 import styles from "../styles/factorsmodal.module.css";
+import React from "react";
 
 export interface FactorSectionProps {
   factors: IFactor[];
@@ -27,12 +28,17 @@ export const FactorSection = ({
     formState: { errors },
   } = useForm<FactorFormData>();
 
-  const onSubmit = (data: FactorFormData) => {
+  const onSubmit: SubmitHandler<FactorFormData> = (
+    data: FactorFormData,
+    e?: React.BaseSyntheticEvent<object, HTMLFormElement, HTMLFormElement>
+  ) => {
     addFactor({
       title: data.factorName,
       weight: { assignedScore: parseInt(data.factorWeight) },
     });
-    reset({});
+    if (e) {
+      e.target.reset();
+    }
   };
 
   return (
@@ -49,10 +55,18 @@ export const FactorSection = ({
               type="text"
               className={styles.FormInput}
               placeholder="New Factor Name"
-              {...register("factorName", { required: true })}
+              {...register("factorName", {
+                required: true,
+                validate: {
+                  exists: (value) =>
+                    !factors.map((factor) => factor.title).includes(value), // Check if factor with that title already exists}
+                },
+              })}
             />
             {errors.factorName?.type === "required" &&
               "Factor Name is required"}
+            {errors.factorName?.type === "exists" &&
+              `${errors.factorName?.ref?.value} is already a factor`}
           </div>
           <div className={styles.FormField}>
             <label htmlFor="factorWeight">Factor Weight (0-10)</label>

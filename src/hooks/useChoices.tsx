@@ -16,7 +16,7 @@ export const useChoices = (
       if (globalFactors.length > choices[0].factors.length) {
         const newChoices = choices.map((choice: IChoice): IChoice => {
           const newFactors = choice.factors.slice();
-          newFactors.push({ ...globalFactors[-1] });
+          newFactors.push({ ...globalFactors.at(-1) } as IFactor); // since choices.length > 0, .at(-1) should always be defined.
           return { ...choice, factors: newFactors };
         });
         setChoices(newChoices);
