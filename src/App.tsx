@@ -27,7 +27,7 @@ function App() {
         modalState={showModal}
         handleModalState={handleModalToggle}
         BaseComponent={FactorSection}
-        baseComponentProps={{ factors }}
+        baseComponentProps={{ factors, addFactor, removeFactor }}
       />
       <section id="configuration" className={styles.Config}>
         <button

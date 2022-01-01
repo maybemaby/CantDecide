@@ -1,17 +1,16 @@
 import { useState, useEffect } from "react";
 import { IFactor } from "../models/IFactor";
 
-type EditFactorsFunc = (factor: IFactor) => void;
+export type EditFactorsFunc = (factor: IFactor) => void;
 
 export const useFactors = (): [IFactor[], EditFactorsFunc, EditFactorsFunc] => {
   const [factors, setFactors] = useState<IFactor[]>([]);
 
-
-  const calcWeights = (): void => {
-    const totalWeight = factors.reduce((prev: number, current): number => {
+  const calcWeights = (factorList: IFactor[]): IFactor[] => {
+    const totalWeight = factorList.reduce((prev: number, current): number => {
       return prev + current.weight.assignedScore;
     }, 0);
-    const updatedFactors = factors.map((factor: IFactor): IFactor => {
+    const updatedFactors = factorList.map((factor: IFactor): IFactor => {
       return {
         ...factor,
         weight: {
@@ -21,20 +20,22 @@ export const useFactors = (): [IFactor[], EditFactorsFunc, EditFactorsFunc] => {
         },
       };
     });
-    setFactors(updatedFactors);
+    return updatedFactors;
   };
 
   const addFactor = (factor: IFactor): void => {
-    setFactors([...factors, factor]);
-    calcWeights();
+    const newFactors = [...factors];
+    newFactors.push(factor);
+    const weightedFactors = calcWeights(newFactors);
+    setFactors(weightedFactors);
   };
 
   const removeFactor = (factor: IFactor): void => {
     const newFactors = factors.filter((insideFactor: IFactor): boolean => {
       return !(insideFactor.title === factor.title);
     });
-    setFactors(newFactors);
-    calcWeights();
+    const weightedFactors = calcWeights(newFactors);
+    setFactors(weightedFactors);
   };
 
   return [factors, addFactor, removeFactor];
