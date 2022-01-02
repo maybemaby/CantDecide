@@ -10,7 +10,7 @@ interface ChoiceListProps {
 }
 
 export const ChoiceList = ({ factors }: ChoiceListProps): JSX.Element => {
-  const { choices, addChoice, toggleChoose, setScore, clearAll } =
+  const { choices, addChoice, toggleChoose, setScore, clearAll, sortByScore } =
     useChoices(factors);
   const [choiceInput, setChoiceInput] = useState<string>("");
 
@@ -52,7 +52,9 @@ export const ChoiceList = ({ factors }: ChoiceListProps): JSX.Element => {
       <span className={styles.Header}>
         <h2 className={styles.Title}>Choices</h2>
         <span className={styles.ButtonGroup}>
-          <button className={`${styles.RoundButton}`}>Sort by score</button>
+          <button className={`${styles.RoundButton}`} onClick={sortByScore}>
+            Sort by score
+          </button>
           <button className={`${styles.RoundButton}`} onClick={clearAll}>
             Clear choices
           </button>

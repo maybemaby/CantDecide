@@ -12,6 +12,7 @@ export interface UseChoicesReturn {
     score: number
   ) => void;
   clearAll: () => number;
+  sortByScore: () => void;
 }
 
 export const useChoices = (globalFactors: IFactor[]): UseChoicesReturn => {
@@ -115,5 +116,22 @@ export const useChoices = (globalFactors: IFactor[]): UseChoicesReturn => {
     return toDelete;
   };
 
-  return { choices, addChoice, toggleChoose, setScore, clearAll };
+  const calcTotalTrueScore = (choice: IChoice): number => {
+    const total = choice.factors.reduce((prev: number, current): number => {
+      return prev + (current.trueScore || 0);
+    }, 0);
+    return total;
+  };
+
+  const sortByScore = (): void => {
+    if (choices.length <= 0) return;
+    const sortedChoices = [...choices];
+    sortedChoices.forEach((choice) => (choice.chosen = false));
+    sortedChoices.sort((prevChoice, nextChoice): number => {
+      return calcTotalTrueScore(nextChoice) - calcTotalTrueScore(prevChoice);
+    });
+    setChoices(sortedChoices);
+  };
+
+  return { choices, addChoice, toggleChoose, setScore, clearAll, sortByScore };
 };
