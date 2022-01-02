@@ -11,6 +11,7 @@ export interface UseChoicesReturn {
     setFactor: IScoredFactor,
     score: number
   ) => void;
+  clearAll: () => number;
 }
 
 export const useChoices = (globalFactors: IFactor[]): UseChoicesReturn => {
@@ -108,5 +109,11 @@ export const useChoices = (globalFactors: IFactor[]): UseChoicesReturn => {
     return recalculated;
   };
 
-  return { choices, addChoice, toggleChoose, setScore };
+  const clearAll = (): number => {
+    const toDelete = choices.length;
+    setChoices([]);
+    return toDelete;
+  };
+
+  return { choices, addChoice, toggleChoose, setScore, clearAll };
 };

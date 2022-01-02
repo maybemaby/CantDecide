@@ -7,6 +7,15 @@
   border: 2px solid black;
   margin: 0.75rem;
   padding: 0.75rem 0.75rem 5rem 0.75rem;
+  transition-property: all;
+  transition-duration: 200ms;
+}
+
+.Header {
+  display: flex;
+  justify-content: space-between;
+  font-weight: bold;
+  font-size: large;
 }
 
 .Title {
@@ -28,8 +37,53 @@
   border-radius: 0.75rem;
 }
 
+.ButtonGroup {
+  font-size: small;
+  color: whitesmoke;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.RoundButton {
+  border-radius: 9999px;
+  padding: 0.25rem 0.5rem;
+  margin-right: 0.375rem;
+  margin-left: 0.375rem;
+  color: rgba(243, 244, 246, 1);
+  transition-property: background-color;
+  transition-duration: 400ms;
+  transition-timing-function: ease-in-out;
+  cursor: pointer;
+}
+
+.RoundButton:first-of-type {
+  background-color: var(--indigo-500);
+}
+
+.RoundButton:first-of-type:hover {
+  background-color: var(--indigo-600);
+}
+
+.RoundButton:nth-of-type(2) {
+  background-color: var(--red-400);
+}
+
+.RoundButton:nth-of-type(2):hover {
+  background-color: var(--red-500);
+}
+
 @media screen and (min-width: 768px) {
   .Body {
+    margin: 0.5rem;
+  }
+
+  .ButtonGroup {
+    font-size: 1rem;
+    line-height: 1.5rem;
+  }
+
+  .Header {
     margin: 0.5rem;
   }
 }
