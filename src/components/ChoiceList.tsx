@@ -27,7 +27,7 @@ export const ChoiceList = ({ factors }: ChoiceListProps): JSX.Element => {
   const handleChoiceSubmit = (
     event: React.KeyboardEvent<HTMLInputElement>
   ): void => {
-    if (event.key === "Enter") {
+    if (event.key === "Enter" && choiceInput) {
       const id =
         choices.reduce(
           (prev, current) => {
