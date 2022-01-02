@@ -63,4 +63,19 @@ describe("App rendering tests", () => {
     });
     expect(choiceList).toBeEmptyDOMElement();
   });
+
+  test("modal appearance", () => {
+    // Makes sure the modal is invisible on first render and then visible after clicking
+    // the edit factors button
+    const editButton = screen.getByText(/Edit Factors/i);
+    // First click, to render Modal
+    fireEvent.click(editButton);
+    const modal = screen.getByLabelText("Factor Weight (0-10)");
+    expect(modal).toBeInTheDocument();
+    const outsideModal = container.querySelector("div.OuterContainer");
+    expect(outsideModal).not.toBeNull();
+    // Second click outside, to close Modal.
+    fireEvent.click(outsideModal as Element);
+    expect(outsideModal).not.toBeInTheDocument();
+  });
 });

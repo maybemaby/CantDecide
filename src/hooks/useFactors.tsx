@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { IFactor } from "../models/IFactor";
 
 export type EditFactorsFunc = (factor: IFactor) => void;
