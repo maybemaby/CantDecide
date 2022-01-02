@@ -20,6 +20,9 @@
     "web-vitals": "^2.1.2"
   },
   "scripts": {
+    "style:lint": "eslint ./src --quiet --fix",
+    "style:format": "prettier --write ./src",
+    "style": "prettier --write ./src && eslint ./src --quiet --fix",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
