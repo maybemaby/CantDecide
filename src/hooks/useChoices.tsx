@@ -1,14 +1,21 @@
 import { useState, useEffect } from "react";
 import { IChoice } from "../models/IChoice";
-import { IFactor } from "../models/IFactor";
+import { IFactor, IScoredFactor } from "../models/IFactor";
+
+export interface UseChoicesReturn {
+  choices: IChoice[];
+  addChoice: (choice: { title: string; id: number }) => void;
+  toggleChoose: (chosenChoice: IChoice) => void;
+  setScore: (
+    setChoice: IChoice,
+    setFactor: IScoredFactor,
+    score: number
+  ) => void;
+}
 
 export const useChoices = (
   globalFactors: IFactor[]
-): [
-  IChoice[],
-  (choice: { title: string; id: number }) => void,
-  (chosenChoice: IChoice) => void
-] => {
+): UseChoicesReturn => {
   const [choices, setChoices] = useState<IChoice[]>([]);
 
   useEffect(() => {
@@ -16,7 +23,7 @@ export const useChoices = (
       if (globalFactors.length > choices[0].factors.length) {
         const newChoices = choices.map((choice: IChoice): IChoice => {
           const newFactors = choice.factors.slice();
-          newFactors.push({ ...globalFactors.at(-1) } as IFactor); // since choices.length > 0, .at(-1) should always be defined.
+          newFactors.push({ ...globalFactors.at(-1) } as IFactor); // since choices.length > 0, .at(-1) should always be defined.A
           return { ...choice, factors: newFactors };
         });
         setChoices(newChoices);
@@ -50,5 +57,32 @@ export const useChoices = (
     setChoices(newChoices);
   };
 
-  return [choices, addChoice, toggleChoose];
+  const setScore = (
+    setChoice: IChoice,
+    setFactor: IScoredFactor,
+    score: number
+  ): void => {
+    const newFactors = setChoice.factors.map(
+      (factor: IScoredFactor): IScoredFactor => {
+        if (setFactor.title === factor.title) {
+          return {
+            ...factor,
+            score: score,
+            trueScore:
+              Math.round(
+                score * (factor.weight.trueWeighting as number) * 1e2
+              ) / 1e2,
+          };
+        } else return { ...factor };
+      }
+    );
+    const newChoices = choices.map((choice: IChoice): IChoice => {
+      if (choice.title === setChoice.title) {
+        return { ...choice, factors: newFactors };
+      } else return { ...choice };
+    });
+    setChoices(newChoices);
+  };
+
+  return {choices, addChoice, toggleChoose, setScore};
 };
