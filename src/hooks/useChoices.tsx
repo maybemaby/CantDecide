@@ -13,9 +13,7 @@ export interface UseChoicesReturn {
   ) => void;
 }
 
-export const useChoices = (
-  globalFactors: IFactor[]
-): UseChoicesReturn => {
+export const useChoices = (globalFactors: IFactor[]): UseChoicesReturn => {
   const [choices, setChoices] = useState<IChoice[]>([]);
 
   useEffect(() => {
@@ -23,10 +21,13 @@ export const useChoices = (
       if (globalFactors.length > choices[0].factors.length) {
         const newChoices = choices.map((choice: IChoice): IChoice => {
           const newFactors = choice.factors.slice();
+          newFactors.forEach((value: IFactor, index: number) => {
+            value.weight = globalFactors[index].weight;
+          });
           newFactors.push({ ...globalFactors.at(-1) } as IFactor); // since choices.length > 0, .at(-1) should always be defined.A
           return { ...choice, factors: newFactors };
         });
-        setChoices(newChoices);
+        setChoices(recalcScores(newChoices));
       } else if (globalFactors.length < choices[0].factors.length) {
         const factorTitles = globalFactors.map(
           (factor: IFactor): string => factor.title
@@ -37,9 +38,12 @@ export const useChoices = (
               return factorTitles.includes(factor.title);
             }
           );
+          newFactors.forEach((value: IFactor, index: number) => {
+            value.weight = globalFactors[index].weight;
+          });
           return { ...choice, factors: newFactors };
         });
-        setChoices(newChoices);
+        setChoices(recalcScores(newChoices));
       }
   }, [globalFactors]);
 
@@ -84,5 +88,25 @@ export const useChoices = (
     setChoices(newChoices);
   };
 
-  return {choices, addChoice, toggleChoose, setScore};
+  const recalcScores = (toCalc: IChoice[]): IChoice[] => {
+    const recalculated = toCalc.map((choice: IChoice): IChoice => {
+      const newFactors = choice.factors.map(
+        (factor: IScoredFactor): IScoredFactor => {
+          if (factor.score) {
+            return {
+              ...factor,
+              trueScore:
+                Math.round(
+                  factor.score * (factor.weight.trueWeighting as number) * 1e2
+                ) / 1e2,
+            };
+          } else return { ...factor };
+        }
+      );
+      return { ...choice, factors: newFactors };
+    });
+    return recalculated;
+  };
+
+  return { choices, addChoice, toggleChoose, setScore };
 };
