@@ -25,9 +25,7 @@ export const FactorSection = ({
 }: FactorSectionProps): JSX.Element => {
   const {
     register,
-    reset,
     handleSubmit,
-    watch,
     formState: { errors },
   } = useForm<FactorFormData>();
 
