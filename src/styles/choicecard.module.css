@@ -51,6 +51,11 @@
   width: auto;
 }
 
+.Error {
+  color: red;
+  margin-bottom: 0.25rem;
+}
+
 li {
   list-style: none;
   padding-left: 0.5rem;

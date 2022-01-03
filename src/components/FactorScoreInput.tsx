@@ -2,7 +2,7 @@ import { IChoice } from "../models/IChoice";
 import { IScoredFactor } from "../models/IFactor";
 import { UseChoicesReturn } from "../hooks/useChoices";
 import styles from "../styles/choicecard.module.css";
-import React from "react";
+import React, { useState } from "react";
 
 export const FactorScoreInput = ({
   factor,
@@ -13,9 +13,15 @@ export const FactorScoreInput = ({
   choice: IChoice;
   setScore: UseChoicesReturn["setScore"];
 }) => {
+  const [error, setError] = useState<string>("");
   const handleScoreSubmit = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    const score = parseInt(event.currentTarget.value);
     if (event.key === "Enter") {
-      setScore(choice, factor, parseInt(event.currentTarget.value));
+      if (score >= 0 && score <= 10) {
+        setScore(choice, factor, score);
+      } else {
+        setError("Value must be between 0 and 10");
+      }
     }
   };
 
@@ -30,7 +36,11 @@ export const FactorScoreInput = ({
           placeholder="Enter a score (0-10)"
           className={styles.ScoreInput}
           onKeyDown={handleScoreSubmit}
+          onBlur={() => setError("")}
         />
+        {error && (
+          <p className={styles.Error}>Score must be between 0 and 10</p>
+        )}
       </>
     );
   }
