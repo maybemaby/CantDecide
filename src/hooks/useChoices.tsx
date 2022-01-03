@@ -13,6 +13,7 @@ export interface UseChoicesReturn {
   ) => void;
   clearAll: () => number;
   sortByScore: () => void;
+  removeChoice: (choice: IChoice) => void;
 }
 
 export const useChoices = (globalFactors: IFactor[]): UseChoicesReturn => {
@@ -133,5 +134,20 @@ export const useChoices = (globalFactors: IFactor[]): UseChoicesReturn => {
     setChoices(sortedChoices);
   };
 
-  return { choices, addChoice, toggleChoose, setScore, clearAll, sortByScore };
+  const removeChoice = (toRemove: IChoice): void => {
+    const newChoices = choices.filter((choice: IChoice) => {
+      return toRemove.title !== choice.title;
+    });
+    setChoices(newChoices);
+  };
+
+  return {
+    choices,
+    addChoice,
+    toggleChoose,
+    setScore,
+    clearAll,
+    sortByScore,
+    removeChoice,
+  };
 };

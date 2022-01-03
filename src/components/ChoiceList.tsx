@@ -10,8 +10,15 @@ interface ChoiceListProps {
 }
 
 export const ChoiceList = ({ factors }: ChoiceListProps): JSX.Element => {
-  const { choices, addChoice, toggleChoose, setScore, clearAll, sortByScore } =
-    useChoices(factors);
+  const {
+    choices,
+    addChoice,
+    toggleChoose,
+    setScore,
+    clearAll,
+    sortByScore,
+    removeChoice,
+  } = useChoices(factors);
   const [choiceInput, setChoiceInput] = useState<string>("");
 
   const handleChange = (event: React.FormEvent<HTMLInputElement>): void => {
@@ -69,6 +76,7 @@ export const ChoiceList = ({ factors }: ChoiceListProps): JSX.Element => {
                 choice={choice}
                 toggleChoose={toggleChoose}
                 setScore={setScore}
+                removeChoice={removeChoice}
               />
             );
           })}

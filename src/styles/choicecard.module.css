@@ -29,6 +29,14 @@
   top: 0.625rem;
 }
 
+.TrashIcon {
+  cursor: pointer;
+  position: absolute;
+  right: 1rem;
+  top: 0.625rem;
+  width: 24px;
+}
+
 .Factors {
   display: flex;
   flex-direction: column;
@@ -45,6 +53,7 @@
 
 li {
   list-style: none;
+  padding-left: 0.5rem;
 }
 
 @media screen and (min-width: 768px) {
