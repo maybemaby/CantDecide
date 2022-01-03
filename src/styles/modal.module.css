@@ -26,6 +26,17 @@
   border-radius: 1.5rem;
   box-shadow: rgba(0, 0, 0, 0.25) 0px 14px 28px,
     rgba(0, 0, 0, 0.22) 0px 10px 10px;
+  animation-name: expand;
+  animation-duration: 200ms;
+}
+
+@keyframes expand {
+  0% {
+    transform: scale(0);
+  }
+  100% {
+    transform: scale(1);
+  }
 }
 
 .ExitButton {
@@ -37,6 +48,12 @@
 .ExitButton:hover {
   cursor: pointer;
   background-color: transparent;
+}
+
+@media screen and (prefers-reduced-motion: reduce) {
+  .Container {
+    animation: none;
+  }
 }
 
 @media screen and (min-width: 768px) {
