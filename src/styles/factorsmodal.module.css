@@ -45,6 +45,7 @@
   border-radius: 9999px;
   padding: 0.25rem 0.5rem;
   margin-right: 0.5rem;
+  margin-left: 0.5rem;
   color: rgba(243, 244, 246, 1);
   transition-property: background-color;
   transition-duration: 400ms;
