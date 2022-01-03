@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { IChoice } from "../models/IChoice";
 import { IFactor, IScoredFactor } from "../models/IFactor";
 
+type UseChoicesFunc = (choices: IChoice[]) => void;
 export interface UseChoicesReturn {
   choices: IChoice[];
   addChoice: (choice: { title: string; id: number }) => void;
@@ -16,8 +17,20 @@ export interface UseChoicesReturn {
   removeChoice: (choice: IChoice) => void;
 }
 
-export const useChoices = (globalFactors: IFactor[]): UseChoicesReturn => {
-  const [choices, setChoices] = useState<IChoice[]>([]);
+export const useChoices = (
+  globalFactors: IFactor[],
+  onChange: UseChoicesFunc[],
+  initialValue?: IChoice[]
+): UseChoicesReturn => {
+  const [choices, setChoices] = useState<IChoice[]>(() => {
+    return initialValue ? initialValue : [];
+  });
+
+  useEffect(() => {
+    onChange.forEach((changeFunc) => {
+      changeFunc(choices);
+    });
+  }, [choices]);
 
   useEffect(() => {
     if (choices.length > 0)

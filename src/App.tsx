@@ -5,10 +5,16 @@ import { ReactComponent as MoonIcon } from "./icons/moon.svg";
 import { ChoiceList } from "./components/ChoiceList";
 import { Modal } from "./components/Modal";
 import { FactorSection, FactorSectionProps } from "./components/FactorSection";
+import { IFactor } from "./models/IFactor";
 import { useFactors } from "./hooks/useFactors";
+import { useLocalStorage } from "./hooks/useLocalStorage";
 
 function App() {
-  const { factors, addFactor, removeFactor, removeAllFactors } = useFactors();
+  const { value, saveToStorage } = useLocalStorage<IFactor>("factors");
+  const { factors, addFactor, removeFactor, removeAllFactors } = useFactors(
+    [saveToStorage],
+    value
+  );
   const [showModal, setShowModal] = useState(false);
 
   const handleModalToggle = (): void => {

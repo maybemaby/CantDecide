@@ -1,6 +1,7 @@
 import styles from "../styles/choicelist.module.css";
 import React, { useState } from "react";
 import { useChoices } from "../hooks/useChoices";
+import { useLocalStorage } from "../hooks/useLocalStorage";
 import { IFactor } from "../models/IFactor";
 import { ChoiceCard } from "./ChoiceCard";
 import { IChoice } from "../models/IChoice";
@@ -10,6 +11,7 @@ interface ChoiceListProps {
 }
 
 export const ChoiceList = ({ factors }: ChoiceListProps): JSX.Element => {
+  const { value, saveToStorage } = useLocalStorage<IChoice>("choices");
   const {
     choices,
     addChoice,
@@ -18,7 +20,7 @@ export const ChoiceList = ({ factors }: ChoiceListProps): JSX.Element => {
     clearAll,
     sortByScore,
     removeChoice,
-  } = useChoices(factors);
+  } = useChoices(factors, [saveToStorage], value);
   const [choiceInput, setChoiceInput] = useState<string>("");
 
   const handleChange = (event: React.FormEvent<HTMLInputElement>): void => {

@@ -1,7 +1,8 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { IFactor } from "../models/IFactor";
 
 export type EditFactorsFunc = (factor: IFactor) => void;
+type UseFactorsFunc = (factors: IFactor[]) => any;
 
 export interface UseFactorsReturn {
   factors: IFactor[];
@@ -10,8 +11,19 @@ export interface UseFactorsReturn {
   removeAllFactors: (toRemove?: IFactor[]) => void;
 }
 
-export const useFactors = (): UseFactorsReturn => {
-  const [factors, setFactors] = useState<IFactor[]>([]);
+export const useFactors = (
+  onChange: UseFactorsFunc[],
+  initialValue?: IFactor[]
+): UseFactorsReturn => {
+  const [factors, setFactors] = useState<IFactor[]>(() => {
+    return initialValue ? initialValue : [];
+  });
+
+  useEffect(() => {
+    onChange.forEach((changeFunc) => {
+      changeFunc(factors);
+    });
+  }, [factors]);
 
   const calcWeights = (factorList: IFactor[]): IFactor[] => {
     const totalWeight = factorList.reduce((prev: number, current): number => {
