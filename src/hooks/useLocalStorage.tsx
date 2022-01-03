@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 interface UseLocalStorageReturn<T> {
   value: T[];
@@ -7,17 +7,17 @@ interface UseLocalStorageReturn<T> {
 }
 
 export function useLocalStorage<T>(key: string): UseLocalStorageReturn<T> {
-  const [value, setValue] = useState<T[]>((): T[] => {
+  const [value] = useState<T[]>((): T[] => {
     const retrieved = window.localStorage.getItem(key);
     if (retrieved) {
-      return JSON.parse(retrieved);
+      return JSON.parse(retrieved) as T[];
     } else return [];
   });
 
   const getFromStorage = (): T[] => {
     const value = window.localStorage.getItem(key);
     if (value) {
-      return JSON.parse(value);
+      return JSON.parse(value) as T[];
     } else return [];
   };
 
