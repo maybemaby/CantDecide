@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { IFactor } from "../models/IFactor";
 
 export type EditFactorsFunc = (factor: IFactor) => void;
-type UseFactorsFunc = (factors: IFactor[]) => any;
+type UseFactorsFunc = (factors: IFactor[]) => void;
 
 export interface UseFactorsReturn {
   factors: IFactor[];
