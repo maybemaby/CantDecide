@@ -2,7 +2,8 @@ import { IChoice } from "../models/IChoice";
 import { IScoredFactor } from "../models/IFactor";
 import { UseChoicesReturn } from "../hooks/useChoices";
 import styles from "../styles/choicecard.module.css";
-import React, { useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
+import { debounce } from "lodash";
 
 export const FactorScoreInput = ({
   factor,
@@ -14,19 +15,63 @@ export const FactorScoreInput = ({
   setScore: UseChoicesReturn["setScore"];
 }) => {
   const [error, setError] = useState<string>("");
+
+  const handleScoreChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const score = parseInt(event.target.value);
+    if (score >= 0 && score <= 10) {
+      setScore(choice, factor, score);
+      setError("");
+    } else {
+      setError("Value must be between 0 and 10");
+    }
+  };
+
+  const debouncedChangeHandler = useMemo(
+    () => debounce(handleScoreChange, 500),
+    [choice, factor]
+  );
+
+  useEffect(() => {
+    return () => {
+      debouncedChangeHandler.cancel();
+    };
+  }, []);
+
   const handleScoreSubmit = (event: React.KeyboardEvent<HTMLInputElement>) => {
     const score = parseInt(event.currentTarget.value);
     if (event.key === "Enter") {
       if (score >= 0 && score <= 10) {
         setScore(choice, factor, score);
+        setError("");
       } else {
         setError("Value must be between 0 and 10");
       }
     }
   };
 
+  // Resets to last value if there is an error.
+  const handleBlur = (event: React.FormEvent<HTMLInputElement>) => {
+    if (error !== "") {
+      event.currentTarget.value = factor.score?.toString() || "";
+    }
+  };
+
   if (factor.score) {
-    return <>{factor.score}</>;
+    return (
+      <>
+        <input
+          type="number"
+          name={choice.title}
+          className={styles.FilledScoreInput}
+          placeholder={factor.score.toString()}
+          onBlur={handleBlur}
+          onChange={debouncedChangeHandler}
+        />
+        {error && (
+          <p className={styles.Error}>Score must be between 0 and 10</p>
+        )}
+      </>
+    );
   } else {
     return (
       <>
