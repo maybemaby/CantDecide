@@ -1,4 +1,4 @@
-import React from "react";
+import React, { SetStateAction } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { UseChoicesReturn } from "../hooks/useChoices";
 import { IChoice } from "../models/IChoice";
@@ -8,28 +8,43 @@ export interface OptionsProps {
   choiceRestrictions: UseChoicesReturn["restrictions"];
   choices: IChoice[];
   handleModalState: () => void;
+  showWeighted: {
+    state: boolean;
+    set: React.Dispatch<SetStateAction<boolean>>;
+  };
 }
 
 interface OptionsFormData {
   maxChoices?: number;
+  showWeighted: boolean;
 }
 
 export const Options = ({
   choiceRestrictions,
   choices,
   handleModalState,
+  showWeighted,
 }: OptionsProps) => {
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<OptionsFormData>();
+  } = useForm<OptionsFormData>({
+    defaultValues: {
+      maxChoices: choiceRestrictions.max,
+      showWeighted: showWeighted.state,
+    },
+  });
 
   const onSubmit: SubmitHandler<OptionsFormData> = (
     data: OptionsFormData,
-    e?: React.BaseSyntheticEvent<object, HTMLFormElement, HTMLFormElement>
+    _e?: React.BaseSyntheticEvent<object, HTMLFormElement, HTMLFormElement>
   ): void => {
-    if (data.maxChoices) choiceRestrictions.setMax(data.maxChoices);
+    console.log(data);
+    if (data.maxChoices) {
+      choiceRestrictions.setMax(data.maxChoices);
+    }
+    showWeighted.set(data.showWeighted);
     handleModalState();
   };
 
@@ -56,6 +71,10 @@ export const Options = ({
               (choices.length < 2
                 ? "Minimum of 2 choices"
                 : "Already reached limit")}
+          </div>
+          <div>
+            <label htmlFor="showWeighted">Show Weighted Scores</label>
+            <input type="checkbox" {...register("showWeighted")} />
           </div>
         </div>
         <button

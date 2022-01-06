@@ -9,10 +9,12 @@ export const FactorScoreInput = ({
   factor,
   choice,
   setScore,
+  showWeighted,
 }: {
   factor: IScoredFactor;
   choice: IChoice;
   setScore: UseChoicesReturn["setScore"];
+  showWeighted: boolean;
 }) => {
   const [error, setError] = useState<string>("");
 
@@ -59,14 +61,17 @@ export const FactorScoreInput = ({
   if (factor.score) {
     return (
       <>
-        <input
-          type="number"
-          name={choice.title}
-          className={styles.FilledScoreInput}
-          placeholder={factor.score.toString()}
-          onBlur={handleBlur}
-          onChange={debouncedChangeHandler}
-        />
+        <span>
+          <input
+            type="number"
+            name={choice.title}
+            className={styles.FilledScoreInput}
+            placeholder={factor.score.toString()}
+            onBlur={handleBlur}
+            onChange={debouncedChangeHandler}
+          />
+          {showWeighted && <p>Weighted Score: {factor.trueScore}</p>}
+        </span>
         {error && (
           <p className={styles.Error}>Score must be between 0 and 10</p>
         )}

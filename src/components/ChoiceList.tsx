@@ -14,6 +14,7 @@ interface ChoiceListProps {
 
 export const ChoiceList = ({ factors }: ChoiceListProps): JSX.Element => {
   const [error, setError] = useState<string>("");
+  const [showWeightedScores, setShowWeightedScores] = useState<boolean>(false);
   const [showOptions, setShowOptions] = useState<boolean>(false);
   const { value, saveToStorage } = useLocalStorage<IChoice>("choices");
   const {
@@ -77,7 +78,15 @@ export const ChoiceList = ({ factors }: ChoiceListProps): JSX.Element => {
     <section id="choices" className={styles.Container}>
       <Modal<OptionsProps>
         BaseComponent={Options}
-        baseComponentProps={{ choiceRestrictions: restrictions, choices: choices, handleModalState: handleOptionsToggle }}
+        baseComponentProps={{
+          choiceRestrictions: restrictions,
+          choices: choices,
+          handleModalState: handleOptionsToggle,
+          showWeighted: {
+            state: showWeightedScores,
+            set: setShowWeightedScores,
+          },
+        }}
         handleModalState={handleOptionsToggle}
         modalState={showOptions}
       />
@@ -108,6 +117,7 @@ export const ChoiceList = ({ factors }: ChoiceListProps): JSX.Element => {
                 toggleChoose={toggleChoose}
                 setScore={setScore}
                 removeChoice={removeChoice}
+                showWeighted={showWeightedScores}
               />
             );
           })}
