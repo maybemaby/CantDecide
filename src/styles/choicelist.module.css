@@ -9,6 +9,7 @@
   padding: 0.75rem 0.75rem 5rem 0.75rem;
   transition-property: all;
   transition-duration: 200ms;
+  position: relative;
 }
 
 .Header {
@@ -40,9 +41,13 @@
 .ButtonGroup {
   font-size: small;
   color: whitesmoke;
-  display: flex;
+  display: none;
   justify-content: center;
   align-items: center;
+}
+
+.DropDownButton {
+  display: block;
 }
 
 .OptionsButton {
@@ -82,14 +87,21 @@
   background-color: var(--red-500);
 }
 
+@media screen and (min-width: 640px) {
+  .ButtonGroup {
+    display: flex;
+    font-size: 1rem;
+    line-height: 1.5rem;
+  }
+
+  .DropDownButton {
+    display: none;
+  }
+}
+
 @media screen and (min-width: 768px) {
   .Body {
     margin: 0.5rem;
-  }
-
-  .ButtonGroup {
-    font-size: 1rem;
-    line-height: 1.5rem;
   }
 
   .Header {

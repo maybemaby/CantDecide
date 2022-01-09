@@ -7,6 +7,7 @@ import { Options, OptionsProps } from "./Options";
 import { Modal } from "./Modal";
 import { ChoiceCard } from "./ChoiceCard";
 import { IChoice } from "../models/IChoice";
+import { DropDown } from "./DropDown";
 
 interface ChoiceListProps {
   factors: IFactor[];
@@ -74,6 +75,28 @@ export const ChoiceList = ({ factors }: ChoiceListProps): JSX.Element => {
     }
   };
 
+  const selectOptions = [
+    { value: "sort", label: "Sort by Score" },
+    { value: "clear", label: "Clear all Choices" },
+    { value: "options", label: "Options" },
+  ];
+
+  const handleSelect = (value: string) => {
+    switch (value) {
+      case "sort":
+        sortByScore();
+        break;
+      case "clear":
+        clearAll();
+        break;
+      case "options":
+        handleOptionsToggle();
+        break;
+      default:
+        return;
+    }
+  };
+
   return (
     <section id="choices" className={styles.Container}>
       <Modal<OptionsProps>
@@ -105,6 +128,15 @@ export const ChoiceList = ({ factors }: ChoiceListProps): JSX.Element => {
           <button className={`${styles.RoundButton}`} onClick={clearAll}>
             Clear choices
           </button>
+        </span>
+        <span className={styles.DropDownButton}>
+          <DropDown
+            options={selectOptions}
+            container={{
+              absolutePosition: { top: "10px", right: "15px" },
+            }}
+            onSelect={handleSelect}
+          />
         </span>
       </span>
       <section id="choice-list" className={styles.Body}>
