@@ -11,6 +11,7 @@ interface ChoiceCardProps {
   toggleChoose: (chosen: IChoice) => void;
   setScore: UseChoicesReturn["setScore"];
   removeChoice: (choice: IChoice) => void;
+  showWeighted: boolean;
 }
 
 export const ChoiceCard = ({
@@ -18,6 +19,7 @@ export const ChoiceCard = ({
   toggleChoose,
   setScore,
   removeChoice,
+  showWeighted,
 }: ChoiceCardProps): JSX.Element => {
   const handleChoose = (): void => {
     toggleChoose(choice);
@@ -48,6 +50,7 @@ export const ChoiceCard = ({
                 choice={choice}
                 factor={factor}
                 setScore={setScore}
+                showWeighted={showWeighted}
               />
             </li>
           );

@@ -3,6 +3,16 @@ import { IChoice } from "../models/IChoice";
 import { IFactor, IScoredFactor } from "../models/IFactor";
 
 type UseChoicesFunc = (choices: IChoice[]) => void;
+
+interface UseChoicesOptions {
+  maxChoices?: number;
+}
+
+interface Restrictions {
+  max: number;
+  setMax: (limit: number) => void;
+}
+
 export interface UseChoicesReturn {
   choices: IChoice[];
   addChoice: (choice: { title: string; id: number }) => void;
@@ -15,15 +25,21 @@ export interface UseChoicesReturn {
   clearAll: () => number;
   sortByScore: () => void;
   removeChoice: (choice: IChoice) => void;
+  restrictions: Restrictions;
 }
 
 export const useChoices = (
   globalFactors: IFactor[],
   onChange: UseChoicesFunc[],
-  initialValue?: IChoice[]
+  initialValue?: IChoice[],
+  options?: UseChoicesOptions
 ): UseChoicesReturn => {
   const [choices, setChoices] = useState<IChoice[]>(() => {
     return initialValue ? initialValue : [];
+  });
+  const [choiceLimit, setChoiceLimit] = useState<number>(() => {
+    if (options?.maxChoices) return options.maxChoices;
+    else return Infinity;
   });
 
   useEffect(() => {
@@ -64,6 +80,7 @@ export const useChoices = (
   }, [globalFactors]);
 
   const addChoice = (choice: { title: string; id: number }): void => {
+    if (choices.length >= choiceLimit) return;
     const newChoice = { ...choice, chosen: false, factors: [...globalFactors] };
     setChoices([...choices, newChoice]);
   };
@@ -154,6 +171,10 @@ export const useChoices = (
     setChoices(newChoices);
   };
 
+  const changeChoiceLimit = (limit: number): void => {
+    setChoiceLimit(limit);
+  };
+
   return {
     choices,
     addChoice,
@@ -162,5 +183,9 @@ export const useChoices = (
     clearAll,
     sortByScore,
     removeChoice,
+    restrictions: {
+      max: choiceLimit,
+      setMax: changeChoiceLimit,
+    },
   };
 };
