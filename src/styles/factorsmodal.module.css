@@ -27,12 +27,14 @@
   flex-direction: row;
   flex-wrap: wrap;
   align-items: center;
+  margin-bottom: 10px;
 }
 
 .FormField {
   display: flex;
   flex-direction: column;
   width: 100%;
+  min-width: 200px;
   margin: 0.5rem 10px;
 }
 
