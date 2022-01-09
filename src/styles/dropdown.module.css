@@ -34,6 +34,7 @@
   justify-content: flex-start;
   overflow: hidden;
   list-style: none;
+  height: 0px;
 }
 
 .ListItem {
@@ -54,6 +55,26 @@
 }
 
 /* React-transition-group classes */
+.ListContainer.enter {
+  height: auto;
+}
+
+.ListContainer.enterActive {
+  height: auto;
+}
+
+.ListContainer.enterDone {
+  height: auto;
+}
+
+.ListContainer.exit {
+  height: auto;
+}
+
+.ListContainer.exitActive {
+  height: auto;
+}
+
 .enter {
   max-height: 0px;
 }
