@@ -56,7 +56,9 @@ export const useChoices = (
           newFactors.forEach((value: IFactor, index: number) => {
             value.weight = globalFactors[index].weight;
           });
-          newFactors.push({ ...globalFactors.at(-1) } as IFactor); // since choices.length > 0, .at(-1) should always be defined.A
+          newFactors.push({
+            ...globalFactors[globalFactors.length - 1],
+          } as IFactor); // since choices.length > 0, .at(-1) should always be defined. (replaced .at(-1) due to safari)
           return { ...choice, factors: newFactors };
         });
         setChoices(recalcScores(newChoices));
